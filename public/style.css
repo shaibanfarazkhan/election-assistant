@@ -129,6 +129,7 @@ body {
     font-size: 0.9rem;
     box-shadow: 0 0 0 6px var(--timeline-bg);
     z-index: 1;
+    transition: transform 0.3s ease;
 }
 
 .timeline-content {
@@ -137,12 +138,17 @@ body {
     border-radius: 16px;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .timeline-content:hover {
-    transform: translateY(-2px);
+    transform: translateX(5px) translateY(-2px);
     box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
+}
+.timeline-content:hover ~ .timeline-dot,
+.timeline-item:hover .timeline-dot {
+    transform: scale(1.1);
 }
 
 .timeline-content h3 {
@@ -172,6 +178,7 @@ body {
     align-items: center;
     gap: 15px;
     background: white;
+    z-index: 10;
 }
 
 .avatar {
@@ -203,7 +210,7 @@ body {
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
     scroll-behavior: smooth;
 }
 
@@ -264,18 +271,62 @@ body {
 
 .message.bot .bubble strong {
     font-weight: 600;
-    display: block;
-    margin-bottom: 5px;
     color: var(--primary);
 }
 
+.message.bot .bubble em {
+    font-style: italic;
+    color: var(--primary);
+    background: var(--user-msg);
+    padding: 2px 6px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.85rem;
+}
+
+/* Fact Card */
+.fact-card {
+    background: linear-gradient(to right, #EFF6FF, #DBEAFE);
+    border-top: 1px solid var(--border-color);
+    padding: 12px 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.fact-icon {
+    font-size: 1.5rem;
+}
+
+.fact-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.fact-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#fact-text {
+    font-size: 0.9rem;
+    color: var(--text-main);
+    font-weight: 500;
+    transition: opacity 0.5s ease;
+}
+
+/* Quick Actions */
 .quick-actions {
     padding: 15px 30px;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
     background: white;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid white;
 }
 
 .action-btn {
@@ -288,6 +339,9 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .action-btn:hover {

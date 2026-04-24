@@ -1,6 +1,27 @@
 const chatArea = document.getElementById('chat-area');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
+const factText = document.getElementById('fact-text');
+
+// Facts Rotator
+const factsList = [
+    "The voting age in India is 18 years.",
+    "India has the world's largest democratic election.",
+    "The first general elections were held in 1951-52.",
+    "Electronic Voting Machines (EVMs) were first used in 1982.",
+    "NOTA (None Of The Above) was introduced in 2013.",
+    "The Election Commission of India was established in 1950."
+];
+
+let factIndex = 0;
+setInterval(() => {
+    factText.style.opacity = 0;
+    setTimeout(() => {
+        factIndex = (factIndex + 1) % factsList.length;
+        factText.textContent = factsList[factIndex];
+        factText.style.opacity = 1;
+    }, 500);
+}, 6000);
 
 userInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
@@ -54,6 +75,7 @@ function appendMessage(sender, text) {
     
     if (sender === 'bot') {
         let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        formattedText = formattedText.replace(/\*(.*?)\*/g, '<em>$1</em>');
         bubble.innerHTML = formattedText;
     } else {
         bubble.textContent = text;
@@ -78,13 +100,15 @@ async function typeMessage(sender, text) {
     msgDiv.appendChild(bubble);
     chatArea.appendChild(msgDiv);
     
-    // Convert newlines to <br> explicitly to help splitting, and ** to <strong>
-    let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+    // Format text: ** for bold, * for emphasis/tips, newlines to <br>
+    let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    formattedText = formattedText.replace(/\n/g, '<br>');
+    formattedText = formattedText.replace(/\*(.*?)\*/g, '<em>$1</em>');
     
     bubble.innerHTML = '';
     let currentHTML = '';
     
-    // Split by tags
+    // Split text by any HTML tags to preserve them during typing
     const parts = formattedText.split(/(<[^>]+>)/g);
     
     for (let part of parts) {
@@ -99,9 +123,10 @@ async function typeMessage(sender, text) {
             for (let char of part) {
                 currentHTML += char;
                 bubble.innerHTML = currentHTML;
-                chatArea.scrollTo({ top: chatArea.scrollHeight, behavior: 'smooth' });
-                // Small delay for typing effect
-                await new Promise(r => setTimeout(r, 15)); 
+                
+                chatArea.scrollTo({ top: chatArea.scrollHeight, behavior: 'auto' });
+                // Fast typing speed
+                await new Promise(r => setTimeout(r, 12)); 
             }
         }
     }
