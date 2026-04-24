@@ -2,14 +2,19 @@ const chatArea = document.getElementById('chat-area');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 
-// Send message on Enter key
+// Welcome message on load
+window.onload = () => {
+    appendMessage('bot', "Namaste 🙏 I'm your Election Guide Assistant. Ask me anything!");
+};
+
+// Send message on Enter
 userInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         sendMessage();
     }
 });
 
-// Button click
+// Send button click
 sendBtn.addEventListener('click', sendMessage);
 
 // Quick buttons
@@ -18,6 +23,7 @@ function sendQuickAction(text) {
     sendMessage();
 }
 
+// MAIN FUNCTION
 async function sendMessage() {
     const text = userInput.value.trim();
     if (!text) return;
@@ -42,17 +48,21 @@ async function sendMessage() {
         removeMessage(loadingId);
 
         if (response.ok) {
-            appendMessage('bot', data.answer);
+            // delay for human feel
+            setTimeout(() => {
+                typeMessage(data.answer);
+            }, 400);
         } else {
-            appendMessage('bot', 'Error: ' + (data.error || 'Unknown error'));
+            appendMessage('bot', '⚠️ Error: ' + (data.error || 'Unknown error'));
         }
 
     } catch (error) {
         removeMessage(loadingId);
-        appendMessage('bot', 'Server waking up... try again.');
+        appendMessage('bot', '⏳ Server is waking up... please try again.');
     }
 }
 
+// NORMAL MESSAGE
 function appendMessage(sender, text) {
     const msgDiv = document.createElement('div');
     msgDiv.classList.add('message', sender);
@@ -79,6 +89,36 @@ function appendMessage(sender, text) {
     });
 }
 
+// TYPING EFFECT
+function typeMessage(text) {
+    let index = 0;
+    const speed = 15;
+
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('message', 'bot');
+
+    const bubble = document.createElement('div');
+    bubble.classList.add('bubble');
+    msgDiv.appendChild(bubble);
+    chatArea.appendChild(msgDiv);
+
+    function type() {
+        if (index < text.length) {
+            bubble.innerHTML += text.charAt(index);
+            index++;
+            setTimeout(type, speed);
+        }
+    }
+
+    type();
+
+    chatArea.scrollTo({
+        top: chatArea.scrollHeight,
+        behavior: 'smooth'
+    });
+}
+
+// LOADING
 function showLoading() {
     const id = 'loading-' + Date.now();
 
@@ -109,6 +149,7 @@ function showLoading() {
     return id;
 }
 
+// REMOVE LOADING
 function removeMessage(id) {
     const el = document.getElementById(id);
     if (el) el.remove();
