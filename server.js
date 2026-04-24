@@ -3,7 +3,9 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+
+// ✅ IMPORTANT: use Render's port
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -104,6 +106,7 @@ app.post('/ask', (req, res) => {
     }
 });
 
+// ✅ FINAL LISTEN (FIXED)
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
