@@ -1,93 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Election Guide Assistant</title>
+    <title>Election Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- ✅ IMPORTANT -->
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-    <div class="app-container">
-        <!-- Visual Timeline Section (Left) -->
-        <div class="timeline-section">
-            <div class="timeline-header">
-                <h2><i class="fas fa-calendar-alt"></i> Election Timeline</h2>
-                <p>Typical phases of an Indian General Election</p>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot">1</div>
-                    <div class="timeline-content">
-                        <h3>Announcement</h3>
-                        <p>Election Commission announces dates. Model Code of Conduct begins.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot">2</div>
-                    <div class="timeline-content">
-                        <h3>Nominations</h3>
-                        <p>Candidates file their nomination papers.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot">3</div>
-                    <div class="timeline-content">
-                        <h3>Campaigning</h3>
-                        <p>Parties and candidates campaign. Ends 48h before polling.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot">4</div>
-                    <div class="timeline-content">
-                        <h3>Polling Day</h3>
-                        <p>Citizens cast their votes using EVMs across multiple phases.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot">5</div>
-                    <div class="timeline-content">
-                        <h3>Results</h3>
-                        <p>Counting of votes and declaration of the final results.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Chat Assistant Section (Right) -->
-        <div class="chat-section">
-            <div class="chat-header">
-                <div class="avatar">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <div>
-                    <h1>Election Guide Assistant</h1>
-                    <p class="subtitle">Your guide to the Indian election process</p>
-                </div>
-            </div>
-            
-            <div class="chat-area" id="chat-area">
-                <div class="message bot">
-                    <div class="bubble">
-                        Namaste! 🙏 I'm your Election Guide Assistant. How can I help you understand the election process in India today?
-                    </div>
-                </div>
-            </div>
+<h1>Election Guide Assistant</h1>
 
-            <div class="quick-actions">
-                <button class="action-btn" onclick="sendQuickAction('How to Register to Vote')">📝 How to Register</button>
-                <button class="action-btn" onclick="sendQuickAction('Voting Process')">🗳️ Voting Process</button>
-                <button class="action-btn" onclick="sendQuickAction('Election Timeline')">📅 Election Timeline</button>
-                <button class="action-btn" onclick="sendQuickAction('General Election Info')">📘 General Info</button>
-            </div>
+<div id="chat-area"></div>
 
-            <div class="input-area">
-                <input type="text" id="user-input" placeholder="Type your question here..." autocomplete="off">
-                <button id="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
+<input id="user-input" placeholder="Ask something..." />
+<button onclick="sendMessage()">Send</button>
+
+<br><br>
+
+<button onclick="quick('How to register')">Register</button>
+<button onclick="quick('Voting process')">Voting</button>
+<button onclick="quick('Election timeline')">Timeline</button>
+
+<!-- ✅ IMPORTANT -->
+<script src="script.js"></script>
+
 </body>
 </html>

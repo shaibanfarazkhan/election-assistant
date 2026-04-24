@@ -4,109 +4,70 @@ const path = require('path');
 
 const app = express();
 
-// ✅ IMPORTANT: use Render's port
+// ✅ IMPORTANT for Render
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
+// ✅ FIXED static path
+app.use(express.static('public'));
+
+// ===== AI Logic =====
 function generateAnswer(question) {
     const q = question.toLowerCase();
 
-    // Intent 1: Voter Registration
-    if (q.includes('register') || q.includes('voter id') || q.includes('enroll') || q.includes('apply')) {
-        return `📝 How to Register to Vote in India:
+    if (q.includes('register') || q.includes('voter id')) {
+        return `📝 How to Register:
 
-Here is a simple step-by-step guide:
+1. Go to voters.eci.gov.in
+2. Fill Form 6
+3. Upload documents
+4. Submit
 
-• Step 1: Visit the Voters' Service Portal (voters.eci.gov.in)
-• Step 2: Click on "New Registration for General Electors" (Form 6)
-• Step 3: Fill in your details (name, DOB, address)
-• Step 4: Upload photo, age proof, and address proof
-• Step 5: Submit the form and note reference number
-• Step 6: After verification, your Voter ID will be issued
-
-👉 Tip: Apply early before elections`;
+✔ You will get your voter ID after verification`;
     }
 
-    // Intent 2: Voting Process
-    if (q.includes('voting process') || q.includes('how to vote') || q.includes('booth') || q.includes('vote')) {
-        return `🗳️ Voting Process (Election Day):
+    if (q.includes('vote')) {
+        return `🗳️ Voting Process:
 
-Follow these simple steps:
+1. Go to polling booth
+2. Show ID
+3. Ink mark
+4. Use EVM
 
-• Step 1: Check your name in voter list
-• Step 2: Visit your polling booth
-• Step 3: Show valid ID (Aadhaar / Voter ID / PAN)
-• Step 4: Get ink mark on your finger
-• Step 5: Use EVM machine to vote
-• Step 6: Confirm your vote (beep sound)
-
-👉 Tip: Carry valid ID proof`;
+✔ Done!`;
     }
 
-    // Intent 3: Election Timeline
-    if (q.includes('timeline') || q.includes('date') || q.includes('schedule') || q.includes('when') || q.includes('phase')) {
+    if (q.includes('timeline')) {
         return `📅 Election Timeline:
 
-Indian elections follow these phases:
-
-• Phase 1: Announcement of election dates
-• Phase 2: Nomination filing by candidates
-• Phase 3: Campaigning period
-• Phase 4: Polling (voting days)
-• Phase 5: Counting and results
-
-👉 Tip: Follow news for exact dates`;
+1. Announcement
+2. Nominations
+3. Campaign
+4. Voting
+5. Results`;
     }
 
-    // Intent 4: General Info
-    if (q.includes('what is') || q.includes('election commission') || q.includes('general election') || q.includes('mla') || q.includes('mp')) {
-        return `📘 General Election Information:
-
-• Conducted by Election Commission of India (ECI)
-• National elections every 5 years
-• State elections choose MLAs
-• Eligible voters: 18+ citizens
-
-👉 Elections ensure democracy`;
-    }
-
-    // Default response
-    return `🤖 Election Guide Assistant:
-
-I can help you with:
-
-• Voter registration
-• Voting process
-• Election timeline
-• General election questions
-
-👉 Try asking: "How to register to vote"`;
+    return `🤖 Ask me about:
+• Registration
+• Voting
+• Timeline`;
 }
 
+// ===== API =====
 app.post('/ask', (req, res) => {
-    try {
-        const { question } = req.body;
+    const { question } = req.body;
 
-        if (!question) {
-            return res.status(400).json({ error: "Question is required" });
-        }
-
-        const answer = generateAnswer(question);
-
-        setTimeout(() => {
-            res.json({ answer });
-        }, 500);
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Server error" });
+    if (!question) {
+        return res.status(400).json({ error: "Question required" });
     }
+
+    const answer = generateAnswer(question);
+    res.json({ answer });
 });
 
-// ✅ FINAL LISTEN (FIXED)
+// ===== START =====
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
