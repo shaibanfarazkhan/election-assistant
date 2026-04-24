@@ -3,71 +3,49 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-
-// ✅ IMPORTANT for Render
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ FIXED static path
-app.use(express.static('public'));
-
-// ===== AI Logic =====
 function generateAnswer(question) {
     const q = question.toLowerCase();
 
-    if (q.includes('register') || q.includes('voter id')) {
-        return `📝 How to Register:
+    if (q.includes('register')) {
+        return `How to Register:
 
-1. Go to voters.eci.gov.in
-2. Fill Form 6
-3. Upload documents
-4. Submit
-
-✔ You will get your voter ID after verification`;
+- Go to voters.eci.gov.in
+- Fill Form 6
+- Submit details`;
     }
 
     if (q.includes('vote')) {
-        return `🗳️ Voting Process:
+        return `Voting Process:
 
-1. Go to polling booth
-2. Show ID
-3. Ink mark
-4. Use EVM
-
-✔ Done!`;
+- Go to booth
+- Show ID
+- Vote using EVM`;
     }
 
     if (q.includes('timeline')) {
-        return `📅 Election Timeline:
+        return `Election Timeline:
 
-1. Announcement
-2. Nominations
-3. Campaign
-4. Voting
-5. Results`;
+- Announcement
+- Nomination
+- Campaign
+- Voting
+- Results`;
     }
 
-    return `🤖 Ask me about:
-• Registration
-• Voting
-• Timeline`;
+    return "Ask about register, vote, or timeline.";
 }
 
-// ===== API =====
 app.post('/ask', (req, res) => {
     const { question } = req.body;
-
-    if (!question) {
-        return res.status(400).json({ error: "Question required" });
-    }
-
-    const answer = generateAnswer(question);
-    res.json({ answer });
+    res.json({ answer: generateAnswer(question) });
 });
 
-// ===== START =====
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log("Server running...");
 });

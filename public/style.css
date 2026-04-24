@@ -10,11 +10,25 @@ h1 {
 
 #chat-area {
     background: white;
-    padding: 10px;
     height: 300px;
     overflow-y: auto;
     border: 1px solid #ccc;
+    padding: 10px;
     margin-bottom: 10px;
+}
+
+.message {
+    margin: 10px 0;
+}
+
+.user {
+    text-align: right;
+    color: blue;
+}
+
+.bot {
+    text-align: left;
+    color: green;
 }
 
 input {
@@ -27,5 +41,4 @@ button {
     background: blue;
     color: white;
     border: none;
-    margin: 5px;
 }
