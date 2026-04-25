@@ -1,129 +1,128 @@
-# Election Guide Assistant 🇮🇳
+# 🇮🇳 Election Guide Assistant
 
 ## 📌 Problem Statement
-
 Create an assistant that helps users understand the election process, timelines, and steps in an interactive and easy-to-follow way.
 
 ---
 
 ## 🎯 Project Overview
+Election Guide Assistant is a lightweight full-stack web application designed to simplify the Indian election process, especially for first-time voters.
 
-Election Guide Assistant is a full-stack web application that simplifies the Indian election process for users, especially first-time voters.
-
-It provides clear and structured guidance for:
-
-* Voter registration
-* Voting process
-* Election timeline
+The application provides structured, easy-to-understand guidance on:
+- Voter Registration
+- Voting Process
+- Election Timeline
 
 ---
 
 ## ⚙️ Tech Stack
-
-* Backend: Node.js, Express.js
-* Frontend: HTML, CSS, JavaScript
-* Deployment: Render
+- **Backend:** Node.js, Express.js  
+- **Frontend:** HTML, CSS, Vanilla JavaScript  
+- **Deployment:** Render  
 
 ---
 
-## 🚀 Features
-
-* 🤖 Interactive chat assistant
-* 📝 Step-by-step voter registration guidance
-* 🗳️ Voting process explanation
-* 📅 Visual election timeline
-* 💡 "Did You Know?" facts
-* ⌨️ Typing animation for realistic experience
-* 📱 Clean and responsive UI
+## 🚀 Key Features
+- 🤖 Interactive chat-based assistant  
+- 📝 Step-by-step voter registration guidance  
+- 🗳️ Clear explanation of voting process  
+- 📅 Visual election timeline (UI-based)  
+- 💡 Dynamic “Did You Know?” facts  
+- ⌨️ Typing animation for better UX  
+- 📱 Fully responsive modern UI  
 
 ---
 
 ## 🧠 Approach & Logic
+The system uses a lightweight keyword-based intent detection mechanism.
 
-The assistant uses keyword-based intent detection to understand user queries.
+### Intent Categories:
+- Voter Registration  
+- Voting Process  
+- Election Timeline  
+- General Queries  
 
-It classifies questions into:
-
-1. Voter Registration
-2. Voting Process
-3. Election Timeline
-4. General Questions
-
-Based on the detected intent, it returns:
-
-* A clear title
-* Step-by-step instructions
-* Helpful tips
+### Response Structure:
+Each response includes:
+- Clear Title  
+- Step-by-step Instructions  
+- Helpful Tips (where applicable)  
 
 ---
 
-## 🔄 How It Works
-
-1. User enters a question or clicks a button
-2. Frontend sends request to `/ask`
-3. Backend processes the query
-4. Response is generated
-5. UI displays answer with typing animation
+## 🔄 Application Flow
+1. User enters a query or selects a predefined option  
+2. Frontend sends a request to `/ask` API  
+3. Backend processes the query using intent detection  
+4. Structured response is generated  
+5. UI renders the response with typing animation  
 
 ---
 
 ## ⚠️ Assumptions
-
-* Users are beginners
-* Queries are simple and keyword-based
+- Target users are beginners  
+- Queries are simple and intent-driven  
+- No authentication or personal data required  
 
 ---
 
-## 🤖 Google Services Integration
-
-* Integrated Google Gemini API for intelligent, dynamic responses.
-* Simple REST API `fetch` call—no heavy dependencies!
-* Fallback logic ensures the app functions completely fine even without an API key.
+## ☁️ Google Services Integration
+- Designed to be deployable on **Google Cloud Run**  
+- Architecture allows easy integration with:
+  - Google Gemini API (for future intelligent responses)
+  - Firebase (for scalability if extended)
 
 ---
 
 ## 🧪 Testing
+- API endpoints tested using Postman  
+- Core flows validated:
+  - Registration guidance  
+  - Voting process  
+  - Timeline explanation  
 
-* API endpoints tested using Postman.
-* Verified all user flows:
-  * Voter Registration
-  * Voting Process
-  * Election Timeline
-* Edge cases effectively handled:
-  * Empty inputs
-  * Invalid queries / too long questions
-  * Network errors seamlessly presented to the user
+### Edge Cases Handled:
+- Empty inputs  
+- Invalid queries  
+- Long inputs  
+- Network/API failures  
 
 ---
 
 ## 🔒 Security
-
-* **Input validation** implemented on both frontend and backend.
-* Length restriction on text queries.
-* No sensitive data stored or collected from the user.
+- Input validation on both frontend and backend  
+- Basic sanitization of user input  
+- No storage of user data  
+- Safe API response handling  
 
 ---
 
 ## ⚡ Efficiency
+- Lightweight project (<10MB)  
+- No heavy frameworks used  
+- Optimized request handling  
+- Fast load and response time  
 
-* **Lightweight architecture:** The whole project is <10MB!
-* No heavy frameworks used, maximizing render speed.
-* Simple keyword mapping algorithm optimizations to prevent repeated processing.
+---
+
+## ♿ Accessibility
+- Semantic HTML structure  
+- ARIA labels for input elements  
+- Readable UI with proper contrast  
+- Mobile responsive design  
 
 ---
 
 ## 🌐 Live Demo
-
 https://election-assistant-jj6b.onrender.com
 
 ---
 
 ## 📁 GitHub Repository
-
 https://github.com/shaibanfarazkhan/election-assistant
 
 ---
 
 ## 👨‍💻 Author
-
-Shaiban Faraz Khan (ISE Student)
+**Shaiban Faraz Khan**  
+ISE Student | Full Stack Developer
