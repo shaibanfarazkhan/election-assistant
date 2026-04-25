@@ -3,6 +3,9 @@ const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 const factText = document.getElementById('fact-text');
 
+// Limit max length to prevent huge inputs (matches server 300 char limit)
+userInput.maxLength = 300;
+
 // Facts Rotator
 const factsList = [
     "The voting age in India is 18 years.",

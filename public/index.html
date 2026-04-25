@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="app-container">
+    <main class="app-container">
         <!-- Visual Timeline Section (Left) -->
-        <div class="timeline-section">
-            <div class="timeline-header">
-                <h2><i class="fas fa-calendar-alt"></i> Election Timeline</h2>
+        <section class="timeline-section" aria-label="Election Timeline">
+            <header class="timeline-header">
+                <h2><i class="fas fa-calendar-alt" aria-hidden="true"></i> Election Timeline</h2>
                 <p>Typical phases of an Indian General Election</p>
-            </div>
+            </header>
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-dot">1</div>
@@ -53,21 +53,21 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Chat Assistant Section (Right) -->
-        <div class="chat-section">
-            <div class="chat-header">
-                <div class="avatar">
+        <section class="chat-section" aria-label="Chat Assistant">
+            <header class="chat-header">
+                <div class="avatar" aria-hidden="true">
                     <i class="fas fa-robot"></i>
                 </div>
                 <div>
                     <h1>Election Guide Assistant</h1>
                     <p class="subtitle">Your guide to the Indian election process</p>
                 </div>
-            </div>
+            </header>
             
-            <div class="chat-area" id="chat-area">
+            <div class="chat-area" id="chat-area" aria-live="polite">
                 <div class="message bot">
                     <div class="bubble">
                         <strong>Namaste 🙏 I'm your Election Guide Assistant.</strong><br><br>I can help you understand the election process, timelines, and steps in an easy-to-follow way. How can I help you today?
@@ -84,7 +84,7 @@
                 </div>
             </div>
 
-            <div class="quick-actions">
+            <div class="quick-actions" aria-label="Quick action buttons">
                 <button class="action-btn" onclick="sendQuickAction('How to Register to Vote')">📝 How to Register</button>
                 <button class="action-btn" onclick="sendQuickAction('Voting Process')">🗳️ Voting Process</button>
                 <button class="action-btn" onclick="sendQuickAction('Election Timeline')">📅 Election Timeline</button>
@@ -92,11 +92,11 @@
             </div>
 
             <div class="input-area">
-                <input type="text" id="user-input" placeholder="Type your question here..." autocomplete="off">
-                <button id="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                <input type="text" id="user-input" placeholder="Type your question here..." autocomplete="off" aria-label="Ask election question">
+                <button id="send-btn" onclick="sendMessage()" aria-label="Send message"><i class="fas fa-paper-plane" aria-hidden="true"></i></button>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>

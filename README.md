@@ -74,6 +74,44 @@ Based on the detected intent, it returns:
 
 ---
 
+## 🤖 Google Services Integration
+
+* Integrated Google Gemini API for intelligent, dynamic responses.
+* Simple REST API `fetch` call—no heavy dependencies!
+* Fallback logic ensures the app functions completely fine even without an API key.
+
+---
+
+## 🧪 Testing
+
+* API endpoints tested using Postman.
+* Verified all user flows:
+  * Voter Registration
+  * Voting Process
+  * Election Timeline
+* Edge cases effectively handled:
+  * Empty inputs
+  * Invalid queries / too long questions
+  * Network errors seamlessly presented to the user
+
+---
+
+## 🔒 Security
+
+* **Input validation** implemented on both frontend and backend.
+* Length restriction on text queries.
+* No sensitive data stored or collected from the user.
+
+---
+
+## ⚡ Efficiency
+
+* **Lightweight architecture:** The whole project is <10MB!
+* No heavy frameworks used, maximizing render speed.
+* Simple keyword mapping algorithm optimizations to prevent repeated processing.
+
+---
+
 ## 🌐 Live Demo
 
 https://election-assistant-jj6b.onrender.com
