@@ -12,6 +12,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    message: "Election Guide Assistant is running",
+    timestamp: new Date()
+  });
+});
+
 // Array of interesting facts to append randomly
 const facts = [
     "💡 Did you know? The Election Commission of India was established in 1950.",
@@ -98,19 +106,19 @@ app.post('/ask', async (req, res) => {
 
         // Security & Validation: Check empty or missing input
         if (!question || typeof question !== 'string') {
-            return res.status(400).json({ error: "Question is required and must be text" });
+            return res.status(400).json({ answer: "Question is required and must be text" });
         }
 
         // Security & Validation: Trim input
         question = question.trim();
         
         if (question.length === 0) {
-            return res.status(400).json({ error: "Question cannot be empty" });
+            return res.status(400).json({ answer: "Question cannot be empty" });
         }
 
         // Security & Validation: Limit question length to 300 chars
         if (question.length > 300) {
-            return res.status(400).json({ error: "Question is too long (max 300 characters)" });
+            return res.status(400).json({ answer: "Question is too long (max 300 characters)" });
         }
 
         // Try using Google Gemini API first
@@ -125,7 +133,7 @@ app.post('/ask', async (req, res) => {
 
     } catch (error) {
         console.error("Error in /ask route:", error);
-        res.status(500).json({ error: "Server error occurred while processing the request" });
+        res.status(500).json({ answer: "Server error occurred while processing the request" });
     }
 });
 
