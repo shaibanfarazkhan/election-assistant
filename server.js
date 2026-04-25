@@ -1,18 +1,52 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { Logging } = require('@google-cloud/logging');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Google Cloud Logging Initialization
+const logging = new Logging();
+const log = logging.log('election-assistant-log');
+
 // Environment variable for Gemini API Key
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+let genAI = null;
+if (GEMINI_API_KEY) {
+    genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+}
+
+// Helper to log to Google Cloud
+async function gcpLog(message, severity = 'INFO') {
+    try {
+        const metadata = { resource: { type: 'global' }, severity };
+        const entry = log.entry(metadata, message);
+        await log.write(entry);
+    } catch (error) {
+        console.log(`[${severity}] GCP Log:`, message);
+    }
+}
 
 app.use(cors());
+app.use(helmet());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Rate Limiting
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: { answer: "Too many requests from this IP, please try again after 15 minutes." }
+});
+
+app.use('/ask', apiLimiter);
+
 app.get('/health', (req, res) => {
+  gcpLog('Health check endpoint accessed', 'INFO');
   res.status(200).json({
     status: "ok",
     message: "Election Guide Assistant is running",
@@ -58,10 +92,8 @@ function generateFallbackAnswer(question) {
 
 // Generate smart response using Google Gemini API
 async function generateGeminiAnswer(question) {
-    if (!GEMINI_API_KEY) return null;
+    if (!genAI) return null;
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-    
     const prompt = `You are a helpful, beginner-friendly Election Guide Assistant for India. 
 Please answer the following user question about the Indian election process: "${question}".
 Ensure the response is formatted exactly with:
@@ -72,30 +104,19 @@ Ensure the response is formatted exactly with:
 Keep it concise and clear, no more than 150 words. Do not use markdown headers (# or ##), just bold text for the title.`;
 
     try {
-        // Using global fetch available in Node.js 18+
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }]
-            })
-        });
-
-        if (!response.ok) {
-            console.warn("Gemini API returned an error status:", await response.text());
-            return null; // Fallback will handle it
-        }
-
-        const data = await response.json();
-        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const result = await model.generateContent(prompt);
+        const text = result.response.text();
         
         if (text) {
             const randomFact = facts[Math.floor(Math.random() * facts.length)];
+            gcpLog('Successfully generated Gemini response', 'INFO');
             return text.trim() + "\n\n" + randomFact;
         }
         return null;
     } catch (error) {
         console.error("Gemini API call failed:", error);
+        gcpLog(`Gemini API call failed: ${error.message}`, 'ERROR');
         return null; // Fallback will handle it
     }
 }
@@ -133,10 +154,14 @@ app.post('/ask', async (req, res) => {
 
     } catch (error) {
         console.error("Error in /ask route:", error);
+        gcpLog(`Server error in /ask route: ${error.message}`, 'ERROR');
         res.status(500).json({ answer: "Server error occurred while processing the request" });
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+}
+module.exports = app;

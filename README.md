@@ -68,14 +68,14 @@ Each response includes:
 
 ## ☁️ Google Services Integration
 - Designed to be deployable on **Google Cloud Run**  
-- Architecture allows integration with:
-  - Google Gemini API (for intelligent responses)  
-  - Firebase (for scalability)  
+- Integrated with **Google Gemini API** using the official `@google/generative-ai` SDK for intelligent responses.
+- Ready for integration with Firebase for database scalability.
 
 ---
 
 ## 🧪 Testing
-- API endpoints tested using Postman  
+- Full test coverage for core API routes using **Jest** and **Supertest**.
+- API endpoints tested using Postman.
 - Core flows validated:
   - Registration guidance  
   - Voting process  
@@ -86,14 +86,17 @@ Each response includes:
 - Invalid queries  
 - Long inputs  
 - Network/API failures  
+- Mocked Gemini responses for testing fallbacks.
 
 ---
 
 ## 🔒 Security
-- Input validation on frontend and backend  
-- Basic sanitization of user input  
-- No storage of user data  
-- Safe API response handling  
+- **Helmet.js** used for securing HTTP headers against common vulnerabilities.
+- **Express Rate Limit** implemented to prevent brute-force and DDoS attacks on APIs.
+- Input validation on frontend and backend (length, type, empty check).
+- Basic sanitization of user input.
+- No storage of user data.
+- Safe API response handling.
 
 ---
 
