@@ -9,9 +9,9 @@ Create an assistant that helps users understand the election process, timelines,
 Election Guide Assistant is a lightweight full-stack web application designed to simplify the Indian election process, especially for first-time voters.
 
 The application provides structured, easy-to-understand guidance on:
-- Voter Registration
-- Voting Process
-- Election Timeline
+- Voter Registration  
+- Voting Process  
+- Election Timeline  
 
 ---
 
@@ -46,7 +46,7 @@ The system uses a lightweight keyword-based intent detection mechanism.
 Each response includes:
 - Clear Title  
 - Step-by-step Instructions  
-- Helpful Tips (where applicable)  
+- Helpful Tips  
 
 ---
 
@@ -68,9 +68,9 @@ Each response includes:
 
 ## ☁️ Google Services Integration
 - Designed to be deployable on **Google Cloud Run**  
-- Architecture allows easy integration with:
-  - Google Gemini API (for future intelligent responses)
-  - Firebase (for scalability if extended)
+- Architecture allows integration with:
+  - Google Gemini API (for intelligent responses)  
+  - Firebase (for scalability)  
 
 ---
 
@@ -90,7 +90,7 @@ Each response includes:
 ---
 
 ## 🔒 Security
-- Input validation on both frontend and backend  
+- Input validation on frontend and backend  
 - Basic sanitization of user input  
 - No storage of user data  
 - Safe API response handling  
@@ -101,25 +101,25 @@ Each response includes:
 - Lightweight project (<10MB)  
 - No heavy frameworks used  
 - Optimized request handling  
-- Fast load and response time  
+- Fast response time  
 
 ---
 
 ## ♿ Accessibility
 - Semantic HTML structure  
-- ARIA labels for input elements  
-- Readable UI with proper contrast  
+- ARIA labels for inputs  
+- Good contrast for readability  
 - Mobile responsive design  
 
 ---
 
 ## 🌐 Live Demo
-https://election-assistant-jj6b.onrender.com
+https://election-assistant-jj6b.onrender.com  
 
 ---
 
 ## 📁 GitHub Repository
-https://github.com/shaibanfarazkhan/election-assistant
+https://github.com/shaibanfarazkhan/election-assistant  
 
 ---
 
